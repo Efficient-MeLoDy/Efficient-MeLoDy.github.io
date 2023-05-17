@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MeLoDy</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="load_table.js" defer></script>
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+      body {
+        font-family: 'Open-Sans', sans-serif;
+        font-weight: 300;
+        background-color: #fff;
+      }
+      td {
+        vertical-align: middle;
+        text-align: justify;
+        width: 0vw;
+        min-width: 250px;
+      }
+      audio {
+        width: 14vw;
+        min-width: 100px;
+      }
+      .content {
+        width: 69vw;
+        padding: 25px 50px;
+        margin: 25px auto;
+        background-color: white;
+        box-shadow: 0px 0px 10px #999;
+        border-radius: 15px;
+        font-family: "Google Sans";
+      }
+      .contentblock {
+        width: 950px;
+        margin: 0 auto;
+        padding: 0;
+        border-spacing: 25px 0;
+      }
+      .contentblock td {
+        background-color: #fff;
+        padding: 25px 50px;
+        vertical-align: top;
+        box-shadow: 0px 0px 10px #999;
+        border-radius: 15px;
+      }
+      a, a:visited {
+        color: #224b8d;
+        font-weight: 300;
+      }
+      #authors {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 20px;
+      }
+      #conference {
+        text-align: center;
+        margin-bottom: 20px;
+        font-style: italic;
+      }
+      #authors a {
+        margin: 0 10px;
+      }
+      h1 {
+        text-align: center;
+        font-size: 35px;
+        font-weight: 300;
+      }
+      h2 {
+        font-size: 30px;
+        font-weight: 300;
+      }
+      h3 {
+        font-size: 25px;
+        font-weight: 300;
+      }
+      h4 {
+        font-size: 20px;
+        font-weight: 300;
+      }
+      code {
+        display: block;
+        padding: 10px;
+        margin: 10px 10px;
+      }
+      p {
+        line-height: 25px;
+        text-align: justify;
+      }
+      p code {
+        display: inline;
+        padding: 0;
+        margin: 0;
+      }
+      #teasers {
+        margin: 0 auto;
+      }
+      #teasers td {
+        margin: 0 auto;
+        text-align: center;
+        padding: 5px;
+      }
+      #teasers img {
+        width: 250px;
+      }
+      #results img {
+        width: 133px;
+      }
+      #seeintodark {
+        margin: 0 auto;
+      }
+      #sift {
+        margin: 0 auto;
+      }
+      #sift img {
+        width: 250px;
+      }
+      .downloadpaper {
+        padding-left: 20px;
+        float: right;
+        text-align: center;
+      }
+      .downloadpaper a {
+        font-weight: bold;
+        text-align: center;
+      }
+      .teaser-img {
+        width: 80%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .teaser-gif {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .summary-img {
+        width: 100%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .video-iframe {
+        width: 1000;
+        height: 800;
+        margin: auto;
+        display: block;
+      }
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: center
+      }
+      .image {
+        flex-basis: 40%
+      }
+      .text {
+        font-size: 20px;
+        padding-left: 20px;
+      }
+      .center {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .boxshadow {
+        border: 1px solid;
+        padding: 10px;
+        box-shadow: 2px 2px 5px #888888;
+      }
+      .spacertr {
+        height: 8px;
+      }
+      .spacertd {
+        width: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div class="text-center">
+        <h1><strong>Efficient Neural Music Generation</strong></h1>
+        <h5></h5>
+        <span style="font-size: 24px">Anonymous</span></p>
+        <!-- <p class="lead fw-bold">
+          |<a
+            href=""
+            class="btn border-white bg-white fw-bold"
+            >paper</a
+          >|
+        </p> -->
+      </div>
+        <h2 style="text-align:center;">Abstract</h2>
+        <div style="text-align: justify;">
+          Recent progress in music generation has been remarkably advanced by the state-of-the-art MusicLM, which comprises a hierarchy of three LMs, respectively, for semantic, coarse acoustic, and fine acoustic modelings. Yet, sampling with the MusicLM requires processing through these LMs one by one to obtain the fine-grained acoustic tokens, making it computationally expensive and prohibitive for a real-time generation. Efficient music generation with a quality on par with MusicLM remains a significant challenge. In this paper, we present <b>M</b>e<b>L</b>o<b>D</b>y (<b>M</b> for music; <b>L</b> for LM; <b>D</b> for diffusion), an LM-guided diffusion model that generates music audios of state-of-the-art quality meanwhile reducing 95.7% or 99.6% forward passes in MusicLM, respectively, for sampling 10s or 30s music. MeLoDy inherits the highest-level LM from MusicLM for semantic modeling, and applies a novel dual-path diffusion (DPD) model and an audio VAE-GAN to efficiently decode the conditioning semantic tokens into waveform. DPD is proposed to simultaneously model the coarse and fine acoustics by incorporating the semantic information into segments of latents effectively via cross-attention at each denoising step. Our experimental results suggest the superiority of MeLoDy, not only in its practical advantages on sampling speed and infinitely continuable generation, but also in its state-of-the-art musicality, audio quality, and text correlation.
+        </div>
+      </p>
+    </div>
+    <div class="content">
+      <h2 id="model-overview" style="text-align: center;">Overview of MeLoDy</h2>
+      <body>
+      <p style="text-align: center;">
+        <img src="pics/MeLoDy-overview.png" style="width: 60vw; margin-left: 3vw;">
+      </p>
+      </body>
+    </div>
+    <div class="content">
+      <h2 style="text-align: center;">Diversity Analysis and Audio Continuation</h2>
+      We take some unspecific text prompts to analyze the diversity, the creativity and the validity of MeLoDy, and present ten samples (non-cherrypicked) per text prompt. Meanwhile, we show the continuation ability of MeLoDy by prolonging the 10s audio to 20s.
+
+      <h4 style="text-align:center;margin-top: 4vh;"> <b>Text Prompt 1:</b> Give me a background music track suitable for time-lapse videos. </h4>
+
+      <div style="text-align: center;">
+        <div class="table-responsive pt-3">
+          <ul class="pagination justify-content-center">
+            <li class="page-item active">
+              <a id="melody-time-lapse-1" class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item">
+              <a id="melody-time-lapse-2" class="page-link" href="#">2</a>
+            </li>
+            <li class="page-item">
+              <a id="melody-time-lapse-3" class="page-link" href="#">3</a>
+            </li>
+            <li class="page-item">
+              <a id="melody-time-lapse-4" class="page-link" href="#">4</a>
+            </li>
+            <li class="page-item">
+              <a id="melody-time-lapse-5" class="page-link" href="#">5</a>
+            </li>
+            <li class="page-item">
+              <a id="melody-time-lapse-6" class="page-link" href="#">6</a>
+            </li>
+            <li class="page-item">
+              <a id="melody-time-lapse-7" class="page-link" href="#">7</a>
+            </li>
+            <li class="page-item">
+              <a id="melody-time-lapse-8" class="page-link" href="#">8</a>
+            </li>
+            <li class="page-item">
+              <a id="melody-time-lapse-9" class="page-link" href="#">9</a>
+            </li>
+            <li class="page-item">
+              <a id="melody-time-lapse-10" class="page-link" href="#">10</a>
+            </li>
+          </ul>
+          <table
+            class="table pt-2"
+            id="melody-time-lapse"
+          >
+            <thead>
+              <tr>
+                <th>Duration</th>
+                <th style="text-align: center; width: 58vw;">Generated Sample</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <h4 style="text-align:center;margin-top: 4vh;"> <b>Text Prompt 2:</b> Give me a piece of music that can be listened when drinking coffee. </h4>
+
+      <div style="text-align: center;">
+        <div class="table-responsive pt-3">
+          <ul class="pagination justify-content-center">
+            <li class="page-item active">
+              <a id="melody-coffee-time-1" class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item">
+              <a id="melody-coffee-time-2" class="page-link" href="#">2</a>
+            </li>
+            <li class="page-item">
+              <a id="melody-coffee-time-3" class="page-link" href="#">3</a>
+            </li>
+            <li class="page-item">
+              <a id="melody-coffee-time-4" class="page-link" href="#">4</a>
+            </li>
+            <li class="page-item">
+              <a id="melody-coffee-time-5" class="page-link" href="#">5</a>
+            </li>
+            <li class="page-item">
+              <a id="melody-coffee-time6" class="page-link" href="#">6</a>
+            </li>
+            <li class="page-item">
+              <a id="melody-coffee-time-7" class="page-link" href="#">7</a>
+            </li>
+            <li class="page-item">
+              <a id="melody-coffee-time-8" class="page-link" href="#">8</a>
+            </li>
+            <li class="page-item">
+              <a id="melody-coffee-time-9" class="page-link" href="#">9</a>
+            </li>
+            <li class="page-item">
+              <a id="melody-coffee-time-10" class="page-link" href="#">10</a>
+            </li>
+          </ul>
+          <table
+            class="table pt-2"
+            id="melody-coffee-time"
+          >
+            <thead>
+              <tr>
+                <th>Duration</th>
+                <th style="text-align: center; width: 58vw;">Generated Sample</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="content">
+      <h2 style="text-align: center;">Generating Text Prompts from MusicLM</h2>
+      Given the same text promopt, we pair-wise compare MeLoDy's generated samples (non-cherrypicked) with the samples taken from MusicLM's <a href='https://google-research.github.io/seanet/musiclm/examples/'>demo page</a>. For a pair compairson, text prompts involving vocals or human voice are ignored since MeLoDy was mainly trained with non-vocal music data. We also dropped the painting part since the evaluation of visual-audio correlation tends to be highly varied and dependent on subjective feelings.
+      
+      <div style="margin-top: 4vh; text-align: center;">
+      <h3>Instruments</h3>
+      <div class="table-responsive pt-3">
+        <ul class="pagination justify-content-center">
+          <li class="page-item active">
+            <a id="instruments-generation-1" class="page-link" href="#">1</a>
+          </li>
+          <li class="page-item">
+            <a id="instruments-generation-2" class="page-link" href="#">2</a>
+          </li>
+          <li class="page-item">
+            <a id="instruments-generation-3" class="page-link" href="#">3</a>
+          </li>
+          <li class="page-item">
+            <a id="instruments-generation-4" class="page-link" href="#">4</a>
+          </li>
+        </ul>
+        <table
+          class="table pt-2"
+          id="instruments-generation"
+        >
+          <thead>
+            <tr>
+              <th>Text Prompt</th>
+              <th style="text-align: center;">MusicLM (10s)</th>
+              <th style="text-align: center">MeLoDy (10s)</th>
+              <th style="text-align: center">MeLoDy (Cont. to 20s)</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+      
+      <div style="margin-top: 4vh; text-align: center;">
+      <h3>Genres</h3>
+        <div class="table-responsive pt-3">
+          <ul class="pagination justify-content-center">
+            <li class="page-item active">
+              <a id="genres-generation-1" class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item">
+              <a id="genres-generation-2" class="page-link" href="#">2</a>
+            </li>
+            <li class="page-item">
+              <a id="genres-generation-3" class="page-link" href="#">3</a>
+            </li>
+            <li class="page-item">
+              <a id="genres-generation-4" class="page-link" href="#">4</a>
+            </li>
+            <li class="page-item">
+              <a id="genres-generation-5" class="page-link" href="#">5</a>
+            </li>
+            <li class="page-item">
+              <a id="genres-generation-6" class="page-link" href="#">6</a>
+            </li>
+            <li class="page-item">
+              <a id="genres-generation-7" class="page-link" href="#">7</a>
+            </li>
+          </ul>
+          <table
+            class="table pt-2"
+            id="genres-generation"
+          >
+            <thead>
+              <tr>
+                <th>Text Prompt</th>
+                <th style="text-align: center;">MusicLM (10s)</th>
+                <th style="text-align: center">MeLoDy (10s)</th>
+                <th style="text-align: center">MeLoDy (Cont. to 20s)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div style="margin-top: 4vh; text-align: center;">
+      <h3>Musician Experience Level</h3>
+        <div class="table-responsive pt-3">
+          <ul class="pagination justify-content-center">
+            <li class="page-item active">
+              <a id="experience-generation-1" class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item">
+              <a id="experience-generation-2" class="page-link" href="#">2</a>
+            </li>
+          </ul>
+          <table
+            class="table pt-2"
+            id="experience-generation"
+          >
+            <thead>
+              <tr>
+                <th>Text Prompt</th>
+                <th style="text-align: center;">MusicLM (10s)</th>
+                <th style="text-align: center">MeLoDy (10s)</th>
+                <th style="text-align: center">MeLoDy (Cont. to 20s)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div style="margin-top: 4vh; text-align: center;">
+      <h3>Places</h3>
+        <div class="table-responsive pt-3">
+          <ul class="pagination justify-content-center">
+            <li class="page-item active">
+              <a id="places-generation-1" class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item">
+              <a id="places-generation-2" class="page-link" href="#">2</a>
+            </li>
+          </ul>
+          <table
+            class="table pt-2"
+            id="places-generation"
+          >
+            <thead>
+              <tr>
+                <th>Text Prompt</th>
+                <th style="text-align: center;">MusicLM (10s)</th>
+                <th style="text-align: center">MeLoDy (10s)</th>
+                <th style="text-align: center">MeLoDy (Cont. to 20s)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div style="margin-top: 4vh; text-align: center;">
+      <h3>Epochs</h3>
+        <div class="table-responsive pt-3">
+          <ul class="pagination justify-content-center">
+            <li class="page-item active">
+              <a id="epochs-generation-1" class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item">
+              <a id="epochs-generation-2" class="page-link" href="#">2</a>
+            </li>
+          </ul>
+          <table
+            class="table pt-2"
+            id="epochs-generation"
+          >
+            <thead>
+              <tr>
+                <th>Text Prompt</th>
+                <th style="text-align: center;">MusicLM (10s)</th>
+                <th style="text-align: center">MeLoDy (10s)</th>
+                <th style="text-align: center">MeLoDy (Cont. to 20s)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div style="margin-top: 4vh; text-align: center;">
+      <h3>Accordion Solos</h3>
+        <div class="table-responsive pt-3">
+          <ul class="pagination justify-content-center">
+            <li class="page-item active">
+              <a id="accordion-generation-1" class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item">
+              <a id="accordion-generation-2" class="page-link" href="#">2</a>
+            </li>
+          </ul>
+          <table
+            class="table pt-2"
+            id="accordion-generation"
+          >
+            <thead>
+              <tr>
+                <th>Text Prompt</th>
+                <th style="text-align: center;">MusicLM (10s)</th>
+                <th style="text-align: center">MeLoDy (10s)</th>
+                <th style="text-align: center">MeLoDy (Cont. to 20s)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="margin-top: 4vh; text-align: center;">
+      <h3>Rich Description</h3>
+        <div class="table-responsive pt-3">
+          <ul class="pagination justify-content-center">
+            <li class="page-item active">
+              <a id="rich-captions-1" class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item">
+              <a id="rich-captions-2" class="page-link" href="#">2</a>
+            </li>
+          </ul>
+          <table
+            class="table pt-2"
+            id="rich-captions"
+          >
+            <thead>
+              <tr>
+                <th>Text Prompt</th>
+                <th style="text-align: center;">MusicLM (30s)</th>
+                <th style="text-align: center">MeLoDy (30s)</th>
+                <th style="text-align: center">MeLoDy (Cont. to 1m)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      
+   </div>
+     
+
+
+    <div class="content">
+      <h2 style="text-align: center;">Generating Text Prompts from Noise2Music</h2>
+      Given the same text promopt, we pair-wise compare MeLoDy's generated samples with the samples taken from Noise2Music's <a href='https://google-research.github.io/noise2music/'>demo page</a>. For a pair compairson, text prompts involving vocals or human voice are ignored since MeLoDy was mainly trained with non-vocal music data.
+      
+      <div style="margin-top: 4vh; text-align: center;">
+      <h3>Semantically Rich Text Prompts </h3>
+
+        <div class="table-responsive pt-3">
+          <ul class="pagination justify-content-center">
+            <li class="page-item active">
+              <a id="n2m-rich-captions-1" class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item">
+              <a id="n2m-rich-captions-2" class="page-link" href="#">2</a>
+            </li>
+          </ul>
+          <table
+            class="table pt-2"
+            id="n2m-rich-captions"
+          >
+            <thead>
+              <tr>
+                <th>Text Prompt</th>
+                <th style="text-align: center;">Noise2Music (30s)</th>
+                <th style="text-align: center">MeLoDy (30s)</th>
+                <th style="text-align: center">MeLoDy (Cont. to 1m)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="margin-top: 4vh; text-align: center;">
+      <h3>Representation of Key Musical Attributes</h3>
+
+        <div class="table-responsive pt-3">
+          <ul class="pagination justify-content-center">
+            <li class="page-item active">
+              <a id="n2m-musical-attributes-1" class="page-link" href="#">Genre</a>
+            </li>
+            <li class="page-item">
+              <a id="n2m-musical-attributes-2" class="page-link" href="#">Instrument</a>
+            </li>
+            <li class="page-item">
+              <a id="n2m-musical-attributes-3" class="page-link" href="#">Tempo</a>
+            </li>
+            <li class="page-item">
+              <a id="n2m-musical-attributes-4" class="page-link" href="#">Mood</a>
+            </li>
+          </ul>
+          <table
+            class="table pt-2"
+            id="n2m-musical-attributes"
+          >
+            <thead>
+              <tr>
+                <th>Text Prompt</th>
+                <th style="text-align: center;">Noise2Music (30s)</th>
+                <th style="text-align: center">MeLoDy (30s)</th>
+                <th style="text-align: center">MeLoDy (Cont. to 1m)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="margin-top: 4vh; text-align: center;">
+      <h3>More Generation Examples from MusicCaps</h3>
+
+        <div class="table-responsive pt-3">
+          <ul class="pagination justify-content-center">
+            <li class="page-item active">
+              <a id="n2m-musiccaps-1" class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item">
+              <a id="n2m-musiccaps-2" class="page-link" href="#">2</a>
+            </li>
+            <li class="page-item">
+              <a id="n2m-musiccaps-3" class="page-link" href="#">3</a>
+            </li>
+          </ul>
+          <table
+            class="table pt-2"
+            id="n2m-musiccaps"
+          >
+            <thead>
+              <tr>
+                <th>Text Prompt</th>
+                <th style="text-align: center;">Noise2Music (30s)</th>
+                <th style="text-align: center">MeLoDy (30s)</th>
+                <th style="text-align: center">MeLoDy (Cont. to 1m)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+      
+  </body>
+
+</html>
