@@ -10,13 +10,13 @@ function createAudioHTML(path, flat) {
 }
 
 
-function generateExampleTable(tableId, prompt, page) {
+function generateTextPromptTable(tableId, prompt, page) {
   let table = document.getElementById(tableId);
   let nrRows = table.rows.length;
   for (let i = 1; i < nrRows; i++) {
     table.deleteRow(1);
   }
-  const prefix = 'wavs/example_text_prompt/';
+  const prefix = 'wavs/diverse_text_prompt/';
   const end_idx = 2;
   const example = [
     '10 seconds',
@@ -31,6 +31,69 @@ function generateExampleTable(tableId, prompt, page) {
 
     cell = row.insertCell(1);
     cell.innerHTML = createAudioHTML(prefix + prompt + '_' + (i+1).toString() + '0s_' + page.toString() + '.wav', true);
+    cell.style.textAlign = "center";
+    
+  }
+}
+
+
+function generateMusicPromptTable(tableId, prompt, page) {
+  let table = document.getElementById(tableId);
+  let nrRows = table.rows.length;
+  for (let i = 1; i < nrRows; i++) {
+    table.deleteRow(1);
+  }
+  const prefix = 'wavs/diverse_music_prompt/';
+  const end_idx = 2;
+  const example = [
+    '10 seconds',
+    'Continue to 20 seconds',
+  ];
+  for (let i = 0; i < 2; i++) {
+    let row = table.insertRow(i % 2 + 1);
+    row.style.height = '120px';
+    let cell = row.insertCell(0);
+    cell.innerHTML = example[i];
+    cell.style.textAlign = "center";
+
+    cell = row.insertCell(1);
+    cell.innerHTML = createAudioHTML(prefix + prompt + '_' + (i+1).toString() + '0s_' + page.toString() + '.wav', true);
+    cell.style.textAlign = "center";
+    
+  }
+}
+
+function generateAblationAngleScheduleTable(tableId, page) {
+  let table = document.getElementById(tableId);
+  let nrRows = table.rows.length;
+  for (let i = 1; i < nrRows; i++) {
+    table.deleteRow(1);
+  }
+  const prefix = 'wavs/ablation_angle_schedules/';
+  const end_idx = 3;
+  const prompts = [
+    'acoustic guitar',
+    'flute',
+    'saxophone',
+  ];
+  const pages_name = [
+    '10steps',
+    '20steps',
+  ];
+
+  for (let i = 0; i < 3; i++) {
+    let row = table.insertRow(i % 3 + 1);
+    row.style.height = '120px';
+    let cell = row.insertCell(0);
+    cell.innerHTML = prompts[i];
+    cell.style.textAlign = "center";
+
+    cell = row.insertCell(1);
+    cell.innerHTML = createAudioHTML(prefix + prompts[i].replaceAll(' ', '_') + '_uniform_' + pages_name[page-1] + '.wav', false);
+    cell.style.textAlign = "center";
+
+    cell = row.insertCell(2);
+    cell.innerHTML = createAudioHTML(prefix + prompts[i].replaceAll(' ', '_') + '_linear_' + pages_name[page-1] + '.wav', false);
     cell.style.textAlign = "center";
     
   }
@@ -330,8 +393,6 @@ noise2music_musiccaps_text_prompts = [
   'This piece could be used in the soundtrack of a drama movie during a scene of serenity or mourning. There is no singer.',
 ];
 
-generateExampleTable('melody-time-lapse', 'give_me_a_background_music_track', 1);
-generateExampleTable('melody-coffee-time', 'give_me_a_piece_of_music', 1);
 generateShortFormTable('accordion'  , accordion  , 1);
 generateShortFormTable('epochs'     , epochs	   , 1);
 generateShortFormTable('experience' , experience , 1);
@@ -342,30 +403,19 @@ generateLongFormTable('rich-captions', 'musiclm', 'rich-descriptions', musiclm_r
 generateLongFormTable('n2m-rich-captions', 'noise2music', 'rich-descriptions', noise2music_rich_captions, noise2music_rich_captions_text_prompts, 1);
 generateLongFormTable('n2m-musical-attributes', 'noise2music', 'musical-attributes', noise2music_musical_attributes, noise2music_musical_attributes_text_prompts, 1);
 generateLongFormTable('n2m-musiccaps', 'noise2music', 'musiccaps', noise2music_musiccaps, noise2music_musiccaps_text_prompts, 1);
+generateTextPromptTable('melody-time-lapse', 'give_me_a_background_music_track', 1);
+generateTextPromptTable('melody-coffee-time', 'give_me_a_piece_of_music', 1);
+generateMusicPromptTable('Y9hCnEfZFZ04', 'Y9hCnEfZFZ04', 1);
+generateMusicPromptTable('YacEHGV7Gq6U', 'YacEHGV7Gq6U', 1);
+generateMusicPromptTable('YFYFapDVOFHg', 'YFYFapDVOFHg', 1);
+generateMusicPromptTable('YMHHshnnqyco', 'YMHHshnnqyco', 1);
+generateAblationAngleScheduleTable('ablation-angle-schedules', 1)
 
 
 $(document).ready(function() {
 
   const sections_short_form = ['accordion', 'epochs', 'experience', 'places'];
   const filenames_short_form = [accordion, epochs, experience, places];
-  for (let i = 1; i <= 10; i++) {
-    let id = '#melody-time-lapse-' + i;
-    $(id).click(function() {
-      generateExampleTable('melody-time-lapse', 'give_me_a_background_music_track', i);
-      $(id).parent().siblings().removeClass('active');
-      $(id).parent().addClass('active');
-      return false;
-    });
-  }
-  for (let i = 1; i <= 10; i++) {
-    let id = '#melody-coffee-time-' + i;
-    $(id).click(function() {
-      generateExampleTable('melody-coffee-time', 'give_me_a_piece_of_music', i);
-      $(id).parent().siblings().removeClass('active');
-      $(id).parent().addClass('active');
-      return false;
-    });
-  }
   for (let isection = 0; isection <= 5; isection++) {
     let section_name = sections_short_form[isection];
     let filenames = filenames_short_form[isection];
@@ -442,6 +492,51 @@ $(document).ready(function() {
      $(id).parent().addClass('active');
      return false;
    });
+  }
+  for (let i = 1; i <= 10; i++) {
+    let id = '#melody-time-lapse-' + i;
+    $(id).click(function() {
+      generateTextPromptTable('melody-time-lapse', 'give_me_a_background_music_track', i);
+      $(id).parent().siblings().removeClass('active');
+      $(id).parent().addClass('active');
+      return false;
+    });
+  }
+  for (let i = 1; i <= 10; i++) {
+    let id = '#melody-coffee-time-' + i;
+    $(id).click(function() {
+      generateTextPromptTable('melody-coffee-time', 'give_me_a_piece_of_music', i);
+      $(id).parent().siblings().removeClass('active');
+      $(id).parent().addClass('active');
+      return false;
+    });
+  }
+  for (let i = 1; i <= 5; i++) {
+    let id = '#YFYFapDVOFHg-' + i;
+    $(id).click(function() {
+    generateMusicPromptTable('YFYFapDVOFHg', 'YFYFapDVOFHg', i);
+      $(id).parent().siblings().removeClass('active');
+      $(id).parent().addClass('active');
+      return false;
+    });
+  }
+  for (let i = 1; i <= 5; i++) {
+    let id = '#YMHHshnnqyco-' + i;
+    $(id).click(function() {
+      generateMusicPromptTable('YMHHshnnqyco', 'YMHHshnnqyco', i);
+      $(id).parent().siblings().removeClass('active');
+      $(id).parent().addClass('active');
+      return false;
+    });
+  }
+  for (let i = 1; i <= 2; i++) {
+    let id = '#ablation-angle-schedules-' + i;
+    $(id).click(function() {
+      generateAblationAngleScheduleTable('ablation-angle-schedules', i);
+      $(id).parent().siblings().removeClass('active');
+      $(id).parent().addClass('active');
+      return false;
+    });
   }
 
 });
